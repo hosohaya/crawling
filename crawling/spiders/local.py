@@ -11,7 +11,7 @@ logging.basicConfig(filename='log/local.log', level=logging.ERROR)
 
 class LocalSpider(scrapy.Spider):
     name = 'local'
-    allowed_domains = ['race.netkeiba.com']
+    allowed_domains = ['keibaeye.com']
     local = Local()
     exec = 'result'
     first = False
