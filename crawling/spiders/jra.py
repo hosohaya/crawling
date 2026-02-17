@@ -13,13 +13,13 @@ logging.basicConfig(filename='log/jra.log', level=logging.ERROR)
 
 class JraSpider(scrapy.Spider):
     name = 'jra'
-    allowed_domains = ['race.netkeiba.com']
+    allowed_domains = ['keibaeye.com']
     jra = Jra()
     exec = 'race' # race,result,list,2016,2017,2018,2019,2020,2021
     all_update = False
 
     def start_requests(self):
-        # yield scrapy.Request('https://race.netkeiba.com/race/result.html?race_id=202104050405&rf=race_list')
+        # yield scrapy.Request('https://keibaeye.com/race/result.html?race_id=202104050405&rf=race_list')
         if self.exec == 'race': # 最新出馬表の取得
             crawl = json.load(open('json/jra/race.json', 'r'))
             for year, item1 in sorted(crawl.items()): # 年度
@@ -27,7 +27,7 @@ class JraSpider(scrapy.Spider):
                     for times, item3 in sorted(item2.items()): # 回数
                         for days in item3['days']: # 何日目
                             for number in range(1, 13): # レース番号
-                                request = scrapy.Request('https://race.netkeiba.com/race/shutuba.html?race_id={}{}{}{}{}&rf=race_list'
+                                request = scrapy.Request('https://keibaeye.com/race/shutuba.html?race_id={}{}{}{}{}&rf=race_list'
                                     .format(str(year).zfill(4), str(venue_id).zfill(2), str(times).zfill(2), str(days).zfill(2), str(number).zfill(2)))
                                 request.meta['exec'] = self.exec
                                 request.meta['all_update'] = self.all_update
@@ -37,7 +37,7 @@ class JraSpider(scrapy.Spider):
             crawl = json.load(open(dir + '/../../task/race_list.json', 'r'))
             # os.remove(dir + '/../../task/race_list.json')
             for item1 in crawl: # URLキーリスト
-                request = scrapy.Request('https://race.netkeiba.com/race/shutuba.html?race_id={}&rf=race_list'.format(item1['url_key']))
+                request = scrapy.Request('https://keibaeye.com/race/shutuba.html?race_id={}&rf=race_list'.format(item1['url_key']))
                 request.meta['exec'] = self.exec
                 request.meta['all_update'] = self.all_update
                 yield request
@@ -48,7 +48,7 @@ class JraSpider(scrapy.Spider):
                     for times, item3 in sorted(item2.items()): # 回数
                         for days in item3['days']: # 何日目
                             for number in range(1, 13): # レース番号
-                                request = scrapy.Request('https://race.netkeiba.com/race/result.html?race_id={}{}{}{}{}&rf=race_list'
+                                request = scrapy.Request('https://keibaeye.com/race/result.html?race_id={}{}{}{}{}&rf=race_list'
                                     .format(str(year).zfill(4), str(venue_id).zfill(2), str(times).zfill(2), str(days).zfill(2), str(number).zfill(2)))
                                 request.meta['exec'] = self.exec
                                 request.meta['all_update'] = self.all_update
@@ -58,7 +58,7 @@ class JraSpider(scrapy.Spider):
             crawl = json.load(open(dir + '/../../task/list.json', 'r'))
             os.remove(dir + '/../../task/list.json')
             for item1 in crawl: # URLキーリスト
-                request = scrapy.Request('https://race.netkeiba.com/race/result.html?race_id={}&rf=race_list'.format(item1['url_key']))
+                request = scrapy.Request('https://keibaeye.com/race/result.html?race_id={}&rf=race_list'.format(item1['url_key']))
                 request.meta['exec'] = self.exec
                 request.meta['all_update'] = self.all_update
                 yield request
@@ -69,7 +69,7 @@ class JraSpider(scrapy.Spider):
                     for times, item3 in sorted(item2.items()): # 回数
                         for days in range(1, int(item3['days']) + 1): # 何日目
                             for number in range(1, 13): # レース番号
-                                request = scrapy.Request('https://race.netkeiba.com/race/result.html?race_id={}{}{}{}{}&rf=race_list'
+                                request = scrapy.Request('https://keibaeye.com/race/result.html?race_id={}{}{}{}{}&rf=race_list'
                                     .format(str(year).zfill(4), str(venue_id).zfill(2), str(times).zfill(2), str(days).zfill(2), str(number).zfill(2)))
                                 request.meta['exec'] = self.exec
                                 request.meta['all_update'] = self.all_update
