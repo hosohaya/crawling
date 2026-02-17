@@ -17,13 +17,13 @@ class LocalSpider(scrapy.Spider):
     first = False
 
     def start_requests(self):
-        # yield scrapy.Request('https://www.keiba.go.jp/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2021%2f02%2f10&k_raceNo=6&k_babaCode=31')
+        # yield scrapy.Request('https://www.keibaeye.com/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2021%2f02%2f10&k_raceNo=6&k_babaCode=31')
         if self.first: # 過去データの取得
             crawl = json.load(open('json/local/result2021.json', 'r'))
             for i1, item1 in sorted(crawl.items()): # 開催地
                 for i2, item2 in sorted(item1.items()): # 日付
                     for i3 in range(1, int(item2) + 1): # レース番号
-                        request = scrapy.Request('https://www.keiba.go.jp/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate={}&k_raceNo={}&k_babaCode={}'
+                        request = scrapy.Request('https://www.keibaeye.com/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate={}&k_raceNo={}&k_babaCode={}'
                             .format(str(i2), str(i3), str(i1)))
                         request.meta['race_date'] = str(i2)
                         request.meta['race_number'] = str(i3)
@@ -34,7 +34,7 @@ class LocalSpider(scrapy.Spider):
             for i1, item1 in sorted(crawl.items()): # 開催地
                 for i2, item2 in sorted(item1.items()): # 日付
                     for i3 in range(1, int(item2) + 1): # レース番号
-                        request = scrapy.Request('https://www.keiba.go.jp/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate={}&k_raceNo={}&k_babaCode={}'
+                        request = scrapy.Request('https://www.keibaeye.com/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate={}&k_raceNo={}&k_babaCode={}'
                             .format(str(i2), str(i3), str(i1)))
                         request.meta['race_date'] = str(i2)
                         request.meta['race_number'] = str(i3)
